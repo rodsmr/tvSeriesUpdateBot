@@ -44,22 +44,34 @@
 		$dom_document->loadHTML($risultato);
 		libxml_use_internal_errors($internalErrors);
 		
-		# Miglioria 1: la tabella ha solo il titolo perché la ricerca non ha prodotto risultati
-		# Miglioria 2: rivedere la parte di recupero titolo. Ad esempio, con Moana, ho problemi
-		
-		$pattern = "/[a-zA-Z ]* [A-Z][0-9]{2}[a-z][0-9]{2}(-[0-9]{2})?/";
+		$pattern = "/[< a-z=':\/.?0-9_A-Z->\(\)]*/";
 		
 		$ret = array();
-			
+		
+		# Meccanismo di analisi del DOM che scarta la prima riga ($second_foreach) perché
+		# è l'intestazione della tabella e che recupera solo la colonna ($i) numero 6 perché
+		# è quella contenente il titolo del file 		
 		foreach ($dom_document->getElementsByTagName("table") as $table_tag) {
+			$second_foreach = 0;
 			foreach($table_tag->childNodes as $child) {
-				$episodio = $child->nodeValue;
-				preg_match($pattern, $episodio, $matches); #matches contiene tutte le stringhe che combaciano con il pattern		
-				for ($i = 0; $i < count($matches); $i++) {
-					$ret[] = $matches[$i];
+				$i = 0;				
+				foreach($child->childNodes as $child_level_down) {
+					if ($i == 6 && $second_foreach > 0) {
+						$episodio = $child_level_down->nodeValue;
+						preg_match($pattern, $episodio, $matches); #matches contiene tutte le stringhe che combaciano con il pattern
+						for ($j = 0; $j < count($matches); $j++) {
+							$ret[] = $matches[$j];
+						}
+					}
+					$i++;
 				}
+				$second_foreach++;
 			}
 		}
+					
+		# Nel caso in cui non trovo risultati, messaggio user-friendly
+		if (count($ret) == 0)
+			return json_encode(array(0 => "Nessun risultato trovato"));
 		
 		return json_encode($ret);
 	}
