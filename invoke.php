@@ -1,9 +1,12 @@
 <?php
 
 	# Funzione che richiamo tramite il Bot
-	function getLastUpdate($serie_tv) {	
-		
-		$INVOKE_URL = "http://www.tntvillage.scambioetico.org/src/releaselist.php";
+	function getLastUpdate($serie_tv) {
+
+		####################################################################
+		############################## INCLUDE #############################
+		####################################################################
+		include "config.php";
 
 		# Array da inviare in POST a tnvvillage
 		$dati = array(
@@ -15,7 +18,7 @@
 		# Opzioni per effettuare correttamente la chiamata a tntvillage
 		$options = array(
 			'http' => array (
-				'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+				'header' => "Content-Type:application/x-www-form-urlencoded",
 				'method' => "POST",
 				'content' => http_build_query($dati)
 			)
