@@ -8,4 +8,9 @@ Repository dei codici necessari al funzionamento del Bot sull'aggiornamento dell
   <li>Change: migliorata l'analisi dei risultati restituiti dall'invocazione</li>
   </ul>
 </li>
+<li>Versione 2.0 del 28/02/2019
+  <ul>
+  <li>Change: modificato INVOKE URL
+  </ul>
+</li>
 <ol>

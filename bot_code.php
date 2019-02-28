@@ -1,8 +1,6 @@
 <?php
 
-	# Set webhook: https://api.telegram.org/bot318328574:AAGvEqb4x3TDtBE_VzbIhPdVNOG4MOchA1o/setWebhook?url=https://roddyhullu.altervista.org/tvSeriesUpdate_bot_code.php
-	
-	####################################################################
+        ####################################################################
 	############################## INCLUDE #############################      
 	####################################################################
 	include "invoke.php";
